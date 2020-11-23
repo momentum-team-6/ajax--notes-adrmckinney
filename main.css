@@ -26,12 +26,14 @@
     height: auto;
     grid-template-rows: repeat(6, 1fr);
     width: 100%;
+    max-width: 800px;
 }
 
 .note {
     margin: 5px;
     padding: 5px;
     border: 2px solid;
+    background: #81b29a;
 }
 
 .note-title-field {
@@ -80,8 +82,29 @@
     height: auto;
     width: 100%;
     grid-row: 6/6;
+    justify-content: center;
+    align-items: center;
 }
 
 .update-button {
     margin: 5px;
+    background: #F4F1DE;
+}
+
+.saved-notes-title-text {
+    display: flex;
+    justify-content: center;
+}
+
+.title {
+    background: #f2cc8f;
+}
+
+.delete-button {
+    margin: 5px;
+    background: #F4F1DE;
+}
+
+.saved-notes-container {
+    background: #F4F1DE;
 }

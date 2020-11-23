@@ -36,6 +36,7 @@ function displayNotes(notes) {
             event.preventDefault()
             deleteNote(note.id)
         })
+        deleteButton.classList.add('delete-button')
         noteElement.appendChild(deleteButton)
 
         // create dynamic update note
@@ -51,6 +52,16 @@ function displayNotes(notes) {
             document.querySelector('#note-body').value = note.body
         })
         noteElement.appendChild(updateButton)
+
+        // create a dynamic date stamp
+        // const dateStamp = document.createElement('date')
+        // dateStamp.addEventListener('click', function(event){
+        //     preventDefault()
+
+        // })
+        //     dateStamp.innerText = new Date()
+        
+        // noteElement.appendChild(dateStamp)
     }
 }
 
@@ -121,6 +132,7 @@ function updateNote(id, title, body) {
     })
 }
 
+
 // user events
 
 form.addEventListener('submit', function(event) {
@@ -138,7 +150,10 @@ form.addEventListener('submit', function(event) {
     document.querySelector('#note-body').value = ""
     document.querySelector('#submit-button').innerHTML = 'Create Note'
     updatedNote = null
-}
+
+    
+    
+    }
 )
 
 // gets all notes to display for the first page load. This should always be last
