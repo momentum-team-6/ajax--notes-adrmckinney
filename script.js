@@ -1,5 +1,7 @@
 // const { create } = require("json-server")
 
+// const momentMin = require("./moment.min")
+
 const notesApiUrl = 'http://localhost:3000/notes/'
 const form = document.querySelector('#note-writing-container')
 
@@ -50,18 +52,15 @@ function displayNotes(notes) {
             updatedNote = note
             document.querySelector('#note-title').value = note.title
             document.querySelector('#note-body').value = note.body
+            document.querySelector('#note-date').value = note.created_at
         })
         noteElement.appendChild(updateButton)
 
         // create a dynamic date stamp
-        // const dateStamp = document.createElement('date')
-        // dateStamp.addEventListener('click', function(event){
-        //     preventDefault()
-
-        // })
-        //     dateStamp.innerText = new Date()
-        
-        // noteElement.appendChild(dateStamp)
+        const dateStamp = document.createElement('div')
+        dateStamp.id = '#note-date'
+        dateStamp.innerText = 'Created on' + " " + note.created_at
+        noteElement.appendChild(dateStamp)
     }
 }
 
@@ -78,11 +77,11 @@ function getAllNotes() {
     })
 }
 
-function addNote(title, body) {
+function addNote(title, body, created_at) {
     fetch(notesApiUrl, {
         method: 'POST', 
         headers: {"Content-Type": "application/json"}, 
-        body: JSON.stringify({"title": title, "body": body})
+        body: JSON.stringify({"title": title, "body": body, 'created_at': moment().format("MMM Do YYYY")})
     })
     .then(r => r.json())
     .then(function(note) {
@@ -90,7 +89,6 @@ function addNote(title, body) {
         loadedNotes.push(note)
         displayNotes(loadedNotes)
     })
-
 }
 
 function deleteNote(id) {
@@ -117,7 +115,7 @@ function updateNote(id, title, body) {
     fetch(`${notesApiUrl}${id}`, {
         method: "PATCH",
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({'title': title, 'body': body})
+        body: JSON.stringify({'title': title, 'body': body, 'created_at': moment().format()})
     })
     .then(function(response) {
         return response.json()
@@ -131,7 +129,39 @@ function updateNote(id, title, body) {
         displayNotes(loadedNotes)
     })
 }
+function monthNumberToString(month){
+    if (month === 0) {
+        return "Jan"
+    } else if (month === 1) {
+        return "Feb"
+    } else if (month === 2) {
+        return "March"
+    } else if (month === 3) {
+        return "April"
+    } else if (month === 4) {
+        return "May"
+    } else if (month === 5) {
+        return "Jun"
+    } else if (month === 6) {
+        return "July"
+    } else if (month === 7) {
+        return "Aug"
+    } else if (month === 8) {
+        return "Sept"
+    } else if (month === 9) {
+        return "Oct"
+    } else if (month === 10) {
+        return "Nov"
+    } else if (month === 11) {
+        return "Dec"
+    }
+}
 
+// function noteDate(month, day, year) {
+//     let d = new Date()
+//     return monthNumberToString(d.getMonth(month))
+    
+// }
 
 // user events
 
@@ -139,6 +169,7 @@ form.addEventListener('submit', function(event) {
     event.preventDefault()
     const title = document.querySelector('#note-title').value
     const body = document.querySelector('#note-body').value
+    // const created_at = document.querySelector('#note-date').value
     console.log(title, body)
     if (updatedNote) {
         updateNote(updatedNote.id, title, body)
@@ -148,11 +179,10 @@ form.addEventListener('submit', function(event) {
 
     document.querySelector('#note-title').value = ""
     document.querySelector('#note-body').value = ""
+    // document.querySelector('#note-date').value = ""
     document.querySelector('#submit-button').innerHTML = 'Create Note'
     updatedNote = null
 
-    
-    
     }
 )
 

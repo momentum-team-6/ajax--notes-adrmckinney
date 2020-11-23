@@ -34,6 +34,8 @@
     padding: 5px;
     border: 2px solid;
     background: #81b29a;
+    border: none;
+    border-radius: 5%;
 }
 
 .note-title-field {
@@ -89,6 +91,7 @@
 .update-button {
     margin: 5px;
     background: #F4F1DE;
+    border-radius: 5%;
 }
 
 .saved-notes-title-text {
@@ -103,6 +106,7 @@
 .delete-button {
     margin: 5px;
     background: #F4F1DE;
+    border-radius: 5%;
 }
 
 .saved-notes-container {
