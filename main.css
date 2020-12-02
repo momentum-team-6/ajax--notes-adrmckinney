@@ -1,114 +1,122 @@
 * {
     box-sizing: border-box;
     margin: 0;
-    padding: 0 ;
 }
 
-.title {
+html {
+    /* background: #F3DBCE; */
+    background-image: url(/images/lights_img.jpeg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+h1 {
+    font-family: 'Big Shoulders Stencil Display', cursive;
+    font-size: 200%;
+}
+
+.categoryContainer {
+    background: #E5989B;
+    margin: 2%;
+    border-radius: 10px;
+    opacity: .8;
+    width: 250px;
+}
+
+.hover {
+    background: green
+}
+
+.content-container {
+    margin: 5px;
+}
+
+.view {
     display: flex;
-    justify-content: center;
 }
 
-.main-container {
-    display: flex; 
+.edit {
+    display: flex;
 }
 
-.note-writing-container {
-    /* display: flex;
+.note-body-date-container {
+    background: #7A7682;
+    border-top-left-radius : 10px;
+    border-bottom-left-radius: 10px;
+}
+
+.note-body {
+    font-family: 'Montserrat', sans-serif;
+    border-top-left-radius : 10px;
+    border-bottom-left-radius: 10px;
+    padding: 10px;
+    color: #ffffff;
+    width: 100%;
+}
+
+.edit-note-body {
+    font-family: 'Montserrat', sans-serif;
+    border-top-left-radius : 10px;
+    border-bottom-left-radius: 10px;
+    padding: 10px;
+    color: #ffffff;
+    width: 100%;
+    background: #7A7682;
+    border: none;
+}
+
+#note-date {
+    font-size: 75%;
+    padding: 0px 10px 5px 10px;
+    font-family: 'Montserrat', sans-serif;
+    width: 100%;
+}
+
+.actions {
+    display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: #f5f5f5;
-    width: 600px;
-    margin: 0 auto;
-    padding: 0; */
-    display: grid;
-    height: auto;
-    grid-template-rows: repeat(6, 1fr);
-    width: 100%;
-    max-width: 800px;
+    justify-content: space-evenly;
+    background: #7A7682;
+    padding: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
 }
 
-.note {
-    margin: 5px;
-    padding: 5px;
-    border: 2px solid;
-    background: #81b29a;
-    border: none;
-    border-radius: 5%;
+.action-buttons {
 }
 
-.note-title-field {
+.new-note-container {
     display: flex;
-    padding: 1rem;
-    align-items: stretch;
-    height: 100px;
-    width: 100%;
-    grid-row: 1/1;
-    background: #e07a5f;
-    border: none;
+    background: #B5838D;
+    padding: 20px;
+    justify-content: space-between;
+    opacity: .8;
+}
+
+.saved-note-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.category {
+    margin: 2px;
+    padding: 2px;
+    text-align: center;
+    font-family: 'Merriweather', serif;
+}
+
+.note-submission-fields {
+    background: #355070;
     color: white;
-    font-size: 150%;
-}
-
-.note-body-field {
-    display: flex;
-    padding: 1rem;
-    align-items: stretch;
-    height: 100%;
-    width: 100%;
-    grid-row: 2/5;
-    background: #3d405b;
+    border-radius: 10px;
+    font-size: 15px;
+    padding: 5px;
+    margin: 2px;
     border: none;
-    color: #ffffff;
-    font-size: 100%;
 }
 
-.date-stamp {
+#submit-container {
     display: flex;
-    padding: 1rem;
-    align-items: stretch;
-    height: 100px;
-    width: 100%;
-    grid-row: 5/5;
-    background: #3d405b;
-    color: #ffffff;
-    align-items: flex-end;
-    justify-content: flex-end;
-}
-
-.submit-button {
-    display: flex;
-    padding: 1rem;
-    align-items: stretch;
-    height: auto;
-    width: 100%;
-    grid-row: 6/6;
-    justify-content: center;
     align-items: center;
-}
-
-.update-button {
-    margin: 5px;
-    background: #F4F1DE;
-    border-radius: 5%;
-}
-
-.saved-notes-title-text {
-    display: flex;
-    justify-content: center;
-}
-
-.title {
-    background: #f2cc8f;
-}
-
-.delete-button {
-    margin: 5px;
-    background: #F4F1DE;
-    border-radius: 5%;
-}
-
-.saved-notes-container {
-    background: #F4F1DE;
+    flex-wrap: wrap;
 }
