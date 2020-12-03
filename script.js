@@ -38,9 +38,11 @@ function monthNumberToString(month){
 
 const notesApiUrl = 'http://localhost:3000/notes/'
 const submitButton = document.querySelector('#submit-container')
+const dnd = dragula({})
 
+// Application State (memory)
 let tagNotes = {work: [], school: [], family: [], play: [], misc: []}
-let updatedNote = null
+
 
 
 function toggleNoteDisplayMode(note, isEditing) {
@@ -53,9 +55,7 @@ function toggleNoteDisplayMode(note, isEditing) {
     } else {
         viewNoteContainer.style.display = "flex"
         editNoteContainer.style.display = "none"
-    }
-    
-    
+    }  
 }
 
 function diplayViewNote(note, parent) {
@@ -80,7 +80,12 @@ function diplayViewNote(note, parent) {
     // create note date to go inside noteBodyDateContainer
     const noteDate = document.createElement('div')
     noteDate.id = 'note-date'
-    noteDate.innerText = 'Created on' + ' ' + note.created_at
+    
+    if (note.updated_at) {
+        noteDate.innerText = 'Updated on' + ' ' + note.updated_at
+    } else {
+        noteDate.innerText = 'Created on' + ' ' + note.created_at
+    }
     noteBodyDateContainer.appendChild(noteDate)
 
     // create an actions container to house delete and update buttons
@@ -151,8 +156,9 @@ function displayEditNote(note, parent) {
     cancelButton.classList.add('fa-window-close')
     cancelButton.classList.add('action-buttons')
     cancelButton.addEventListener('click', function(event) {
-        event.preventDefault
+        event.preventDefault()
         toggleNoteDisplayMode(note, false)
+        document.querySelector(`#note-body-${note.id}`).value = note.body
     })
     actions.appendChild(cancelButton)
 
@@ -166,7 +172,7 @@ function displayEditNote(note, parent) {
         
         toggleNoteDisplayMode(note, false)
         const body = document.querySelector(`#note-body-${note.id}`).value
-        updateNote(note.id, note.category, body, note.updated_at)
+        updateNote(note.id, note.category, body)
         
         // null created_at date
         noteDate.value = ''
@@ -206,6 +212,10 @@ function displayNotesImproved(tagNotes) {
         // create container for notes
         const categoryContainer = document.createElement('div')
         categoryContainer.classList.add("categoryContainer")
+        // Set category container id to the category name so that
+        // it can be referenced in the dragula drop event
+        categoryContainer.id = categoryName
+        dnd.containers.push(categoryContainer)
         savedNotes.appendChild(categoryContainer)
         
         // create element for category
@@ -215,28 +225,24 @@ function displayNotesImproved(tagNotes) {
         category.id = 'note-category'
         categoryContainer.appendChild(category)
 
-        // create loop for the arrays (i.e., note bodies) of the categories
-        const categoryContainers = []
+        for (let note of notesForCategory) {
 
-        for(let note of notesForCategory) {
-            
             // create contentContainer to house view and edit modes. View and edit modes will each contain noteBodyDate and actions containers
             const contentContainer = document.createElement('div')
             contentContainer.classList.add('content-container')
+            contentContainer.id = note.id
             categoryContainer.appendChild(contentContainer)
-            categoryContainers.push(categoryContainer)
+            
             diplayViewNote(note, contentContainer)
             displayEditNote(note, contentContainer)
             
         }
-
-        dragula(categoryContainers).on('over', function(element) {
-            element.classList.add('hover')
-            console.log(element)
-        })
         
     }
+    dnd.on('drop', function(noteContainer, destinationCategoryContainer) {
+        updateNoteCategory(noteContainer.id, destinationCategoryContainer.id)
 
+    })
 }
 
 // API interactions
@@ -269,7 +275,7 @@ function getAllNotes() {
     })
 }
 
-function addNote(category, body, created_at) {
+function addNote(category, body) {
     fetch(notesApiUrl, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -299,7 +305,7 @@ function deleteNote(category, id) {
     })
 }
 
-function updateNote(id, category, body, updated_at) {
+function updateNote(id, category, body) {
     fetch(`${notesApiUrl}${id}`, {
         method: 'PATCH',
         headers: {'Content-Type': 'application/json'},
@@ -318,9 +324,14 @@ function updateNote(id, category, body, updated_at) {
     })
 }
 
-// const noteToUpdate = notesForCategory.find(function(note) {
-//     return note.id === updatedNote.id
-// })
+function updateNoteCategory(id, category) {
+    fetch(`${notesApiUrl}${id}`, {
+        method: 'PATCH',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({category: category, updated_at: dateStamp()})
+    })
+    
+}
 
 submitButton.addEventListener('submit', function(event) {
     event.preventDefault()

@@ -43,6 +43,7 @@ h1 {
     background: #7A7682;
     border-top-left-radius : 10px;
     border-bottom-left-radius: 10px;
+    flex-grow: 1;
 }
 
 .note-body {
@@ -63,6 +64,7 @@ h1 {
     width: 100%;
     background: #7A7682;
     border: none;
+    flex-grow: 1;
 }
 
 #note-date {
